@@ -187,8 +187,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = normpath(join(BASE_DIR, 'media'))
 
 USER_FIELDS = ['email', 'name',]
-
-try:
-    from .local_settings import *
-except:
-    pass
