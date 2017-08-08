@@ -48,16 +48,14 @@ class Brands(models.Model):
         verbose_name_plural = _("Brands")
         app_label = "brands"
 
-        def __str__(self):
-            return self.name
-
 
 class Categories(models.Model):
+
     name = models.CharField(max_length=250)
     deals = models.ForeignKey(Deals, related_name="deals")
     coupons = models.ForeignKey(Coupons, related_name="coupons")
     counts = models.IntegerField()
-    sub_categories = models.ForeignKey(
+    parent = models.ForeignKey(
         'self',
         verbose_name=_("Parent"),
         null=True,

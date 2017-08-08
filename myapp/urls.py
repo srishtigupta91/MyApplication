@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.staticfiles.views import serve
+
+from myapp import settings
 
 urlpatterns = [
-    url(r'^admin', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^', include('brands.urls')),
     url(r'^', include('promotions.urls')),
+    url(r'^', include('social_connect.urls')),
+]
+urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT})
 ]

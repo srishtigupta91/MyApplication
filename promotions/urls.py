@@ -5,6 +5,7 @@ from promotions import views
 
 
 router = DefaultRouter()
+router.register('coupons',views.CouponsView)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

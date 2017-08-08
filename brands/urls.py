@@ -6,6 +6,7 @@ from brands import views
 
 router = DefaultRouter()
 router.register("brands", views.MakeBrandsView)
+router.register('category',views.CategoriesView)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
