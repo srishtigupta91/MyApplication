@@ -86,9 +86,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name']
 
     class Meta:
-        verbose_name = _('User')
-        verbose_name_plural = _('Users')
-        app_label = _('accounts')
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        app_label = 'accounts'
 
     def get_absolute_url(self):
         return "/users/%s/" % urlquote(self.email)

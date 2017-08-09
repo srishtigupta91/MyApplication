@@ -52,16 +52,17 @@ INSTALLED_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_framework',
-    'oauth2_provider',
-    'social_django',
-    'rest_framework_social_oauth2',
+    'django_extensions',
+    'social_django',  # django social auth
+    'rest_social_auth',
+    'django-model-utils',
 ]
 
 LOCAL_APPS = [
     'accounts',
     'brands',
     'promotions',
-    'social_connect',
+    'notifications',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
@@ -86,19 +87,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
 }
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'rest_framework_social_oauth2.backends.DjangoOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-    # Facebook OAuth2
-    'social_core.backends.facebook.FacebookAppOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
-)
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -167,15 +158,42 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Facebook configuration
-SOCIAL_AUTH_FACEBOOK_KEY = '<your app id goes here>'
-SOCIAL_AUTH_FACEBOOK_SECRET = '<your app secret goes here>'
 
-# Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from facebook. Email is not sent by default, to get it, you must request the email permission:
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1283553238410207'
+SOCIAL_AUTH_FACEBOOK_SECRET = '234e1fe3aadad8599b647d831e60d78f'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', ]
+consumer_token="MJctPxJZkkiaRirqMfrYmZXGg"
+consumer_secret="lrxCNHVvfTSuaJpb7NdYzgVd2dJ98iBry9pEDteLczisdkJRH5"
+
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email'
+    'fields': ','.join([
+        # public_profile
+        'id', 'cover', 'name', 'first_name', 'last_name', 'age_range', 'link',
+        'gender', 'locale', 'picture', 'timezone', 'updated_time', 'verified',
+        # extra fields
+        'email',
+    ]),
 }
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'socialapp.social_pipline.check_for_email',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'socialapp.social_pipline.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'socialapp.social_pipline.save_avatar',
+)
 
 
 # Static files (CSS, JavaScript, Images)

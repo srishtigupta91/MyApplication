@@ -64,7 +64,7 @@ class Categories(models.Model):
     )
 
     class Meta:
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
-        app_label = _("brands")
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+        app_label = "brands"
 
