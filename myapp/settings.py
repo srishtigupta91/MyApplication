@@ -55,14 +55,13 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'social_django',  # django social auth
     'rest_social_auth',
-    'django-model-utils',
 ]
 
 LOCAL_APPS = [
     'accounts',
     'brands',
     'promotions',
-    'notifications',
+    'notification',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
@@ -205,3 +204,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = normpath(join(BASE_DIR, 'media'))
 
 USER_FIELDS = ['email', 'name',]
+
+FCM_APIKEY = "AAAAEWooVBA:APA91bEt-FGeYnqVFbzpKrS93sD9gbVtCgI2aZUYUHdQnTphD-9kBSDl85pO14ZkjRY_Ibf_txXQqy0vLtSRXSNXdAhR70qaND2BBsJWZKIHKzQY5jZEPUY3epCZUfoBwjvapdccz-6q"
+FCM_DEVICE_MODEL = 'notifications.MyDevice'

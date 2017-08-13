@@ -1,34 +1,28 @@
 from django.db import models
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
-# Create your models here.
-from model_utils import FieldTracker
-from model_utils.fields import StatusField, MonitorField, SplitField
-from model_utils import Choices
-from model_utils.managers import QueryManager
+from fcm.models import AbstractDevice
 
-
-class Article(models.Model):
-    DRAFT = 'draft'
-    PUBLISHED = 'published'
-    STATUS = Choices(
-        (DRAFT, 'draft'),
-        (PUBLISHED, 'published')
-    )
-    status_changed = MonitorField(monitor='status')
-    is_removed = models.BooleanField(default=False)
-    published_at = MonitorField(monitor='status', when=['published'])
-    title = models.CharField(max_length=100)
-    status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20)
-    body = SplitField()
+from accounts.models import User
 
 
+class StaticNotification(models.Model):
+    TYPE = (("news",_("News")),("event",_("Event")),("schooltrip",_("School Trip")))
+
+    notification_type= models.CharField(choices=TYPE, max_length=20)
+    recipient_email = models.ForeignKey(User, related_name='recipient')
+    unread = models.BooleanField(default=True,blank=False)
+    actor = models.ForeignKey(User,related_name='actor_user')
+    verb = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-timestamp', )
+
+    def __unicode__(self):
+        return 'actor:%s verb:%s'%(self.actor,self.verb)
 
 
-class Post(models.Model):
-    published = models.BooleanField()
-    pub_date = models.DateField()
-    objects = models.Manager()
-    public = QueryManager(published=True).order_by('-pub_date')
-    title = models.CharField(max_length=100)
-    body = models.TextField()
-    tracker = FieldTracker()
+class MyDevice(AbstractDevice):
+    user = models.ForeignKey(User, related_name='fcm_user')

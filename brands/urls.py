@@ -5,7 +5,7 @@ from brands import views
 
 
 router = DefaultRouter()
-router.register("brands", views.MakeBrandsView)
+router.register("brands", views.BrandsView)
 router.register('category',views.CategoriesView)
 
 urlpatterns = [

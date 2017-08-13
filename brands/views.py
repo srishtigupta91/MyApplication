@@ -3,11 +3,12 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 from accounts.permissions import IsAdvertiser, IsAdminOrAdvertiser
-from brands.models import Brands, Categories
-from brands.serializers import BrandSerializer, CategoriesSerializer
+from .models.brands import *
+from .models.categories import *
+from .serializers import BrandSerializer, CategoriesSerializer
 
 
-class MakeBrandsView(viewsets.ModelViewSet):
+class BrandsView(viewsets.ModelViewSet):
     model = Brands
     serializer_class = BrandSerializer
     permission_classes = (permissions.IsAuthenticated, IsAdvertiser,)
