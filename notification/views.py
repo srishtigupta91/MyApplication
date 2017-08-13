@@ -37,8 +37,8 @@ class NotificationView(ListAPIView):
         notif['event_count'] = StaticNotification.objects.filter(recipient_email=recipient_obj,
                                                  unread=True, notification_type='event').count()
 
-        notif['school_trip_count'] = StaticNotification.objects.filter(recipient_email=recipient_obj,
-                                                     unread=True, notification_type='schooltrip').count()
+        notif['deals_count'] = StaticNotification.objects.filter(recipient_email=recipient_obj,
+                                                     unread=True, notification_type='deals').count()
 
         return response.Response(notif, status=status.HTTP_200_OK)
 

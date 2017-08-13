@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <title>coupon</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
+    <script src="{% static 'js/JsBarcode.all.min.js' %}"></script>
+</head>
+<body>
+<div class="mobileGap">
+    <div class="promo-form">
+        <div class="cupon-header">
+            <div class="congomsg">
+                <h3>Congrats, You’ve been placed into The draw!!! Winner will be announced on {{ config.date|date:"d /M/ Y" }} on
+                    facebook, so stay tunned.</h3>
+                <a href="https://www.facebook.com/NewZealandNatural.AU/?ref=br_rs"><img height="34" width="115"
+                                                                                        class="fb-like"
+                                                                                        src="{% static 'images/like.png' %}"
+                                                                                        style=""></a>
+            </div>
+            <div class="cupon-section">
+
+                {% if no_bar_code %}
+                    <span class="no-barcode">There is no bar code please contact to
+                    <admin class="">Admin</admin></span>
+
+                {% else %}
+                <div class="mail-print" id="tobehidden">
+                    <a onclick="sendEmail('{{ code }}')"><img src="{% static 'images/mail.png' %}" class="mail-img"
+                                                              height="35" width="52"></a>
+                    <a onclick= 'window.print()'><img src="{% static 'images/print.png' %}" class="print-img"
+                                                         height="54"
+                                                         width="57"></a>
+                </div>
+                    <div id='elem'>
+                    <div class="free-scoop" id="free">
+                        <h1> 1 Free Upsized Ice Cream</h1>
+                        <p>YES YES, WHEN YOU COME INTO ONE OF OUR PARLOURS YOU WILL RECIEVE ONE FREE SCOOP WITH ANY ICECREAM PURCHASE, HOW AMAZING! Present this voucher in store in order to redeem free upsize.
+                            <span>Offer expires {{ valid_till | date:"d /M/ Y" }}</span></p>
+                    </div>
+                    <div class="couponRightAraea">
+                        <img src="{% static 'images/nzngreen.png' %}" class="nzimg img-responsive ">
+                        <div class="bar-code" id="bar">
+                            <svg id="barcode" jsbarcode-textmargin="0" jsbarcode-format="upc"></svg>
+                            <script>
+                                JsBarcode("#barcode", "{{ code }}");
+                                console.log("{{ code }}");
+                            </script>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+            <div class="mail-print-new" id="tobehidden">
+                <a onclick="sendEmail('{{ code }}')" id="sendemail"><img src="{% static 'images/mail.png' %}"
+                                                                         height="35" width="52" class="mail-img"
+                                                                         style=""></a>
+                <a onclick= 'window.print()'><img src="{% static 'images/print.png' %}" height="54" width="57"
+                                                     class="print-img" style=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="www.pnocruises.com.au"><img class="img-responsive" src="{% static 'images/adv.gif' %}"></a>
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -8,7 +8,7 @@ from accounts.models import User
 
 
 class StaticNotification(models.Model):
-    TYPE = (("news",_("News")),("event",_("Event")),("schooltrip",_("School Trip")))
+    TYPE = (("news",_("News")),("event",_("Event")),("deals",_("Deals")))
 
     notification_type= models.CharField(choices=TYPE, max_length=20)
     recipient_email = models.ForeignKey(User, related_name='recipient')

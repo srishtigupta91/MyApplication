@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from brands.models import Brands, Categories
+from .models.brands import Brands
+from .models.categories import Categories
 
 
 class BrandSerializer(serializers.ModelSerializer):

@@ -55,13 +55,16 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'social_django',  # django social auth
     'rest_social_auth',
+    'fcm',
 ]
 
 LOCAL_APPS = [
     'accounts',
     'brands',
-    'promotions',
+    'deals',
     'notification',
+    'events',
+    'promo',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
@@ -88,7 +91,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -194,6 +196,10 @@ SOCIAL_AUTH_PIPELINE = (
     'socialapp.social_pipline.save_avatar',
 )
 
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+BROKER_HOST='localhost'
+
+CELERY_IMPORTS = ('deals.tasks',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -206,4 +212,4 @@ MEDIA_ROOT = normpath(join(BASE_DIR, 'media'))
 USER_FIELDS = ['email', 'name',]
 
 FCM_APIKEY = "AAAAEWooVBA:APA91bEt-FGeYnqVFbzpKrS93sD9gbVtCgI2aZUYUHdQnTphD-9kBSDl85pO14ZkjRY_Ibf_txXQqy0vLtSRXSNXdAhR70qaND2BBsJWZKIHKzQY5jZEPUY3epCZUfoBwjvapdccz-6q"
-FCM_DEVICE_MODEL = 'notifications.MyDevice'
+FCM_DEVICE_MODEL = 'notification.MyDevice'

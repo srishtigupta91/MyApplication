@@ -20,4 +20,3 @@ class CategoriesView(viewsets.ModelViewSet):
     serializer_class = CategoriesSerializer
     permission_classes = (permissions.IsAuthenticated, IsAdminOrAdvertiser)
     queryset = Categories.objects.all()
-
